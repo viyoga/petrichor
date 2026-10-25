@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>petrichor</title>
+  <script src="js/boot.js"></script>
+  <link rel="icon" type="image/png" href="icons/icon32.png">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/noctalia.css" id="noctalia-css">
+  <link rel="stylesheet" href="css/newtab.css">
+</head>
+<body class="newtab">
+  <div id="scroll-bar" aria-hidden="true"></div>
+  <canvas id="flue-canvas" aria-hidden="true"></canvas>
+  <canvas id="grid-canvas"></canvas>
+
+  <main class="nt-main">
+    <div class="nt-wrap">
+
+      <section class="terminal spot nt-terminal">
+        <div class="terminal-bar">
+          <span>Petrichor</span>
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-cyan"></span>
+          </div>
+        </div>
+        <div class="terminal-body nt-fastfetch">
+          <div class="fastfetch-container">
+            <div class="fastfetch-pfp-wrap">
+              <img src="http://127.0.0.1:9191/avatar" alt="Avatar" class="fastfetch-pfp" id="ffAvatar" onerror="this.onerror=null;this.src='icons/icon128.png'">
+            </div>
+            <div class="fastfetch-info">
+              <div class="ff-header">
+                <span class="ff-at">@</span><span class="ff-user" id="ffUser">Viyoga</span>
+              </div>
+              <div class="ff-divider"></div>
+              <div class="ff-grid">
+                <div class="ff-row"><span class="ff-key">os</span><span class="ff-val" id="ffOs">Arch Linux x86_64</span></div>
+                <div class="ff-row"><span class="ff-key">os age</span><span class="ff-val" id="ffOsAge">228 days</span></div>
+                <div class="ff-row"><span class="ff-key">kernel</span><span class="ff-val" id="ffKernel">Linux 7.2.6-zen</span></div>
+                <div class="ff-row"><span class="ff-key">uptime</span><span class="ff-val" id="ffUptime">--</span></div>
+                <div class="ff-row"><span class="ff-key">wm</span><span class="ff-val" id="ffWm">Hyprland 0.56.2</span></div>
+                <div class="ff-row"><span class="ff-key">shell</span><span class="ff-val" id="ffShell">Noctalia Shell v5.3.0</span></div>
+                <div class="ff-row"><span class="ff-key">palette</span><span class="ff-val" id="ffPalette">rebellion</span></div>
+                <div class="ff-row"><span class="ff-key">browser</span><span class="ff-val" id="ffBrowser">Brave Origin Nightly</span></div>
+              </div>
+              <div class="ff-colors">
+                <span class="ff-block ff-c0"></span>
+                <span class="ff-block ff-c1"></span>
+                <span class="ff-block ff-c2"></span>
+                <span class="ff-block ff-c3"></span>
+                <span class="ff-block ff-c4"></span>
+                <span class="ff-block ff-c5"></span>
+                <span class="ff-block ff-c6"></span>
+                <span class="ff-block ff-c7"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="dashboard">
+
+        <section class="panel box-stats spot">
+          <div class="panel-head">
+            <span class="panel-title"><span class="heading-sym">~/</span>stats</span>
+            <span class="panel-rule" aria-hidden="true"></span>
+          </div>
+          <div class="panel-body">
+            <div class="stat-line"><span class="stat-label">cpu</span><span class="stat-value" id="statCpu">--%</span></div>
+            <div class="stat-line"><span class="stat-label">ram</span><span class="stat-value" id="statRam">--%</span></div>
+            <div class="stat-line"><span class="stat-label">down</span><span class="stat-value" id="statDown">-- B/s</span></div>
+            <div class="stat-line"><span class="stat-label">up</span><span class="stat-value" id="statUp">-- B/s</span></div>
+            <div class="stat-line"><span class="stat-label">gpu</span><span class="stat-value" id="statGpu">--%</span></div>
+            <div class="stat-line"><span class="stat-label">temp</span><span class="stat-value" id="statTemp">--°C</span></div>
+            <div class="stat-line"><span class="stat-label">disk</span><span class="stat-value" id="statDisk">--%</span></div>
+            <div class="stat-line"><span class="stat-label">swap</span><span class="stat-value" id="statSwap">--%</span></div>
+          </div>
+        </section>
+
+                <section class="panel box-weather spot">
+          <div class="panel-head">
+            <span class="panel-title"><span class="heading-sym">~/</span>weather</span>
+            <span class="panel-rule" aria-hidden="true"></span>
+            <span class="panel-badge" id="weatherBadge">open-meteo</span>
+          </div>
+          <div class="panel-body">
+            <div class="weather-top">
+              <div class="weather-hero">
+                <div class="wc-clock" id="timeDisplay">18:58<i>:53</i></div>
+                <div class="wc-date" id="dateDisplay">saturday, october 24, 2026</div>
+                <div class="weather-now">
+                  <span class="weather-temp" id="weatherTemp">11°</span>
+                  <span class="weather-condition" id="weatherCondition">rain</span>
+                </div>
+              </div>
+
+              <div class="weather-stats">
+                <div class="stat"><span class="stat-label">humi</span><b class="stat-value" id="statHumi">95%</b></div>
+                <div class="stat"><span class="stat-label">wind</span><b class="stat-value" id="statWind">14 kmh</b></div>
+                <div class="stat"><span class="stat-label">prec</span><b class="stat-value" id="statPrec">0%</b></div>
+                <div class="stat"><span class="stat-label">feel</span><b class="stat-value" id="statFeel">9°</b></div>
+                <div class="stat"><span class="stat-label">uv</span><b class="stat-value" id="statUv">0</b></div>
+                <div class="stat"><span class="stat-label">aqi</span><b class="stat-value" id="statAqi">25</b></div>
+              </div>
+            </div>
+
+            <div class="weather-forecast" id="weatherForecast">
+              <div><small>21:00</small><strong>8°</strong><em>overcast</em></div>
+              <div><small>00:00</small><strong>8°</strong><em>overcast</em></div>
+              <div><small>03:00</small><strong>8°</strong><em>overcast</em></div>
+              <div><small>06:00</small><strong>11°</strong><em>drizzle</em></div>
+              <div><small>09:00</small><strong>11°</strong><em>rain</em></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel box-tasks spot">
+          <div class="panel-head">
+            <span class="panel-title"><span class="heading-sym">~/</span>tasks</span>
+            <span class="panel-rule" aria-hidden="true"></span>
+            <span class="panel-badge" id="tasksCount">0 tasks</span>
+          </div>
+          <div class="panel-body panel-body-flush">
+            <div class="tasks-list" id="tasksList"></div>
+            <form class="task-input-row" id="taskForm">
+              <span class="task-input-prompt">[+]</span>
+              <input type="text" id="taskInput" placeholder="add task... (e.g. hw02 @tmrw 11:59 pm)" autocomplete="off" spellcheck="false">
+            </form>
+          </div>
+        </section>
+
+        <section class="panel box-links spot">
+          <div class="panel-head">
+            <span class="panel-title"><span class="heading-sym">~/</span>links</span>
+            <span class="panel-rule" aria-hidden="true"></span>
+            <span class="panel-badge">hotkeys</span>
+          </div>
+          <div class="panel-body">
+            <div class="links-grid" id="linksGrid"></div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="search-overlay" id="searchOverlay" aria-hidden="true">
+    <div class="terminal spot nt-search">
+      <div class="terminal-body">
+        <div class="search-row">
+          <span class="search-prompt">λ</span>
+          <div class="search-input-container">
+            <span class="search-placeholder" id="searchPlaceholder">browse the internet</span>
+            <div class="search-block-cursor" id="searchBlockCursor"></div>
+            <input type="text" id="searchInput" autocomplete="off" spellcheck="false" autofocus>
+          </div>
+        </div>
+        <div class="search-suggestions" id="searchSuggestions"></div>
+      </div>
+    </div>
+  </div>
+
+  <script defer src="js/grid.js"></script>
+  <script defer src="js/flue.js"></script>
+  <script defer src="js/spotlight.js"></script>
+  <script defer src="js/palette.js"></script>
+  <script defer src="js/font.js"></script>
+  <script defer src="js/newtab.js"></script>
+</body>
+</html>

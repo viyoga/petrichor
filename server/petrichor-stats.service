@@ -1,0 +1,12 @@
+[Unit]
+Description=Petrichor Startpage System Stats Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/petrichor-stats-server.py
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target
