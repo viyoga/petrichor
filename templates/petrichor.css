@@ -1,0 +1,67 @@
+/* ============================================================
+   Petrichor — Noctalia Shell Palette Template
+   Maps active Noctalia desktop colors dynamically to Petrichor.
+   ============================================================ */
+html[data-theme],
+:root {
+  /* ── Core surface & text roles ── */
+  --bg: {{colors.surface_container_lowest.default.hex}};
+  --bg-elev: {{colors.surface_container_low.default.hex}};
+  --fg: {{colors.on_surface.default.hex}};
+  --fg-dim: {{colors.on_surface_variant.default.hex}};
+  --accent: {{colors.primary.default.hex}};
+  --accent-2: {{colors.primary.default.hex | darken 8}};
+
+  /* ── Glassmorphic borders & glows ── */
+  --glass: {{colors.surface_container_low.default.rgba | set_alpha 0.45}};
+  --glass-hi: {{colors.surface_container_high.default.rgba | set_alpha 0.62}};
+  --line: {{colors.primary.default.rgba | set_alpha 0.16}};
+  --line-hi: {{colors.primary.default.rgba | set_alpha 0.44}};
+  --sheen: {{colors.on_surface.default.rgba | set_alpha 0.07}};
+  --grid: {{colors.primary.default.rgba | set_alpha 0.07}};
+  --glow: {{colors.primary.default.rgba | set_alpha 0.30}};
+  --halo-a: {{colors.primary.default.rgba | set_alpha 0.16}};
+  --halo-b: {{colors.tertiary.default.rgba | set_alpha 0.13}};
+  --blur: 14px;
+  --sat: 140%;
+
+  /* ── Extended palette tokens ── */
+  --bg-panel: {{colors.surface_container_low.default.hex}};
+  --bg-panel-alt: {{colors.surface_container_high.default.hex}};
+  --bg-glow: {{colors.surface_container_low.default.hex}};
+  --bg-core: {{colors.surface_container_lowest.default.hex | darken 6}};
+  --fg-muted: {{colors.outline.default.hex}};
+  --border: var(--line);
+  --border-strong: var(--line-hi);
+  --accent-bright: {{colors.primary.default.hex | lighten 14}};
+  --accent-soft: {{colors.primary.default.hex}};
+  --accent-dim: {{colors.primary.default.hex | darken 24}};
+  --link: {{colors.primary.default.hex | darken 8}};
+  --link-hover: {{colors.primary.default.hex | lighten 14}};
+  --focus-ring: {{colors.primary.default.hex}};
+  --grid-fade: {{colors.surface_container_lowest.default.hex}};
+  --grid-line: {{colors.primary.default.rgba | set_alpha 0.09}};
+  --grid-dot: {{colors.primary.default.rgba | set_alpha 0.30}};
+  --bar-a: {{colors.primary.default.hex}};
+  --bar-b: {{colors.primary.default.hex | darken 8}};
+  --bar-c: {{colors.primary.default.hex | lighten 14}};
+
+  /* ── Status highlights ── */
+  --red: {{colors.error.default.hex}};
+  --green: {{colors.tertiary.default.hex}};
+  --amber: {{colors.secondary.default.hex}};
+
+  /* ── Dynamic particle & canvas flares ── */
+  --canvas-glow: {{colors.primary.default.rgba | set_alpha 0.35}};
+  --canvas-flare-a: {{colors.primary.default.rgba | set_alpha 0.15}};
+  --canvas-flare-b: {{colors.tertiary.default.rgba | set_alpha 0.12}};
+}
+
+/* ── Glass elevation formulas ── */
+:root {
+  --glass-bg: color-mix(in srgb, var(--bg-elev) 82%, transparent);
+  --glass-bg-subtle: color-mix(in srgb, var(--bg-elev) 50%, transparent);
+  --glass-bg-deep: color-mix(in srgb, var(--bg) 92%, transparent);
+  --glass-border: color-mix(in srgb, var(--fg) 10%, transparent);
+  --glass-border-hi: color-mix(in srgb, var(--accent) 45%, var(--glass-border));
+}

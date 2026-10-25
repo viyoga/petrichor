@@ -12,6 +12,7 @@ zip -r -q petrichor.xpi . \
   -x '.gitignore' \
   -x 'assets/*' \
   -x 'server/*' \
+  -x 'templates/*' \
   -x 'docs/*' \
   -x '*.bak*' \
   -x '.git/*'

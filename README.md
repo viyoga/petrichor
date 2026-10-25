@@ -131,6 +131,27 @@ systemctl --user daemon-reload
 systemctl --user enable --now petrichor-stats.service
 ```
 
+### (Optional) Dynamic Palette Theming via Noctalia Shell (Linux)
+
+If you use [Noctalia Shell](https://github.com/noctalia-dev/noctalia), Petrichor can automatically follow your active desktop wallpaper and color palettes:
+
+1. Copy the included template to your Noctalia templates directory:
+   ```bash
+   cp templates/petrichor.css ~/.config/noctalia/templates/petrichor.css
+   ```
+2. Register the template in `~/.config/noctalia/config.toml`:
+   ```toml
+   [theme.templates.user.petrichor]
+   input_path  = "$XDG_CONFIG_HOME/noctalia/templates/petrichor.css"
+   output_path = "/path/to/petrichor/css/noctalia.css"
+   ```
+   *(Replace `/path/to/petrichor` with the path to your Petrichor folder).*
+3. Add `"petrichor"` to `user_ids` in `[theme.templates]` and reload:
+   ```bash
+   noctalia msg config-reload && noctalia msg templates-apply
+   ```
+Whenever your desktop theme, palette, or wallpaper changes, Petrichor will instantly recolor to match!
+
 ---
 
 ## 📄 License
