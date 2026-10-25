@@ -33,7 +33,7 @@
 - **Glassmorphic Aesthetic**: Deep dark gradients, reactive cursor light flares, and dynamic background particle web.
 - **24-Hour Clock & Natural Weather**: Precise clock with seconds, date display, and real-time Open-Meteo weather with humanized condition phrases (*"it's sunny and warm outside"*).
 - **Interactive Task List**: Add tasks with due tags (`hw02 @tmrw 11:59 pm`), toggle completion, navigate with keys, and persist everything in local storage.
-- **Single-Key Shortcuts Grid**: Quick access to favorite sites with dedicated hotkey badges.
+- **Customizable Shortcuts Grid**: Quick access to favorite sites with dedicated hotkey badges. Add your own sites, delete existing ones with the hover remove button, customize hotkeys, or manage them from the search command palette (`!add`, `!del`, `!reset-links`). Saved locally in your browser.
 - **Neovim-Style Command Palette Search**:
   - Press <kbd>Space</kbd> or <kbd>/</kbd> to open.
   - Solid square block cursor in Neovim normal mode style with faded placeholder.
@@ -92,16 +92,26 @@ You can also use Petrichor as a standalone local startpage in any browser:
 | <kbd>Ctrl</kbd> + <kbd>J</kbd> or <kbd>↓</kbd> | Move down through search suggestions |
 | <kbd>Ctrl</kbd> + <kbd>K</kbd> or <kbd>↑</kbd> | Move up through search suggestions |
 | <kbd>Enter</kbd> | Execute selected suggestion / search / URL |
-| <kbd>Esc</kbd> | Close search overlay |
+| <kbd>Esc</kbd> | Close search overlay / modal dialog |
 | <kbd>t</kbd> | Focus task input field |
 | <kbd>Shift</kbd> + <kbd>T</kbd> | Focus task list |
 | <kbd>x</kbd> or <kbd>Space</kbd> *(in tasks)* | Toggle selected task completed / pending |
 | <kbd>d</kbd> *(in tasks)* | Delete selected task |
-| <kbd>v</kbd>, <kbd>m</kbd>, <kbd>d</kbd>, <kbd>c</kbd>, <kbd>a</kbd>, <kbd>s</kbd>, <kbd>y</kbd>, <kbd>r</kbd>, <kbd>n</kbd>, <kbd>w</kbd> | Direct hotkeys to launch mapped shortcuts |
+| <kbd>g</kbd>, <kbd>y</kbd>, <kbd>r</kbd>, <kbd>w</kbd>, <kbd>m</kbd>, <kbd>c</kbd>, ... | Direct single-key hotkeys to launch mapped shortcuts |
 
 ---
 
 ## ⚙️ Customization
+
+### Manage Shortcuts & Custom Sites
+
+- **Add a site**: Click the `[+ add]` button in the header or the `add site...` card in the grid. Enter the site name, URL, and desired single-key hotkey. Automatic favicon fetching is supported!
+- **Remove a site**: Hover over any shortcut card and click the red `×` button.
+- **Reset to defaults**: Click `[reset]` in the header to restore the default sites.
+- **Search bar commands**:
+  - `!add <name> <url> [key]` (e.g., `!add ArchWiki wiki.archlinux.org a`)
+  - `!del <key>` (e.g., `!del a`)
+  - `!reset-links`
 
 ### Set Custom Weather Location
 In the search bar, type `!loc <latitude> <longitude>` (e.g., `!loc 35.6762 139.6503` for Tokyo or `!loc 40.7128 -74.0060` for New York) and press <kbd>Enter</kbd>. Your custom coordinates will be saved in `localStorage`.

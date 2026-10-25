@@ -580,26 +580,40 @@
   fetchLiveWeather();
 
   // ══════════════════════════════════════════════════════════════════
-  // 5. SHORTCUT LINKS (Preserved from user config)
+  // 5. SHORTCUT LINKS (Customizable with Add/Remove & Hotkeys)
   // ══════════════════════════════════════════════════════════════════
-  const LINKS = [
+  const LINKS_STORAGE_KEY = 'petrichor_custom_links';
+
+  const DEFAULT_LINKS = [
     {
-      key: 'v',
-      name: 'viyoga',
-      url: 'https://viyoga.pages.dev',
-      svg: '<svg viewBox="0 0 24 24"><path d="M19.5 3.5L16 7.2C14.8 6.5 13.4 6 12 6s-2.8.5-4 1.2L4.5 3.5 3.5 11c0 5 3.8 9 8.5 9s8.5-4 8.5-9l-1-7.5zM8.5 12a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>'
+      key: 'g',
+      name: 'github',
+      url: 'https://github.com',
+      svg: '<svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>'
+    },
+    {
+      key: 'y',
+      name: 'youtube',
+      url: 'https://youtube.com',
+      svg: '<svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>'
+    },
+    {
+      key: 'r',
+      name: 'reddit',
+      url: 'https://reddit.com',
+      svg: '<svg viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.197-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
+    },
+    {
+      key: 'w',
+      name: 'wikipedia',
+      url: 'https://wikipedia.org',
+      svg: '<svg viewBox="0 0 24 24"><path d="M12.09 13.12L9.58 6.54h1.77l1.64 4.54 1.63-4.54h1.76l-2.5 6.58 2.68 6.88h-1.83l-1.74-4.82-1.76 4.82H8.96l2.67-6.88h.46zM2.84 6.54h1.86l3.37 8.94 2.14-5.69-1.39-3.25h1.76l2.13 5.48 2.15-5.48h1.76l-1.4 3.25 2.14 5.69 3.37-8.94h1.86l-4.4 11.58h-1.64l-2.29-5.9-2.28 5.9h-1.64L2.84 6.54z"/></svg>'
     },
     {
       key: 'm',
       name: 'gmail',
       url: 'https://mail.google.com',
       svg: '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>'
-    },
-    {
-      key: 'd',
-      name: 'gdrive',
-      url: 'https://drive.google.com',
-      svg: '<svg viewBox="0 0 24 24"><path d="M7.71 3.5L1.15 15l3.43 6 6.55-11.5M9.73 15L6.3 21h13.12l3.43-6M22.29 15L15.73 3.5H8.86l6.56 11.5"/></svg>'
     },
     {
       key: 'c',
@@ -615,46 +629,198 @@
     },
     {
       key: 's',
-      name: 'syncthing',
-      url: 'http://127.0.0.1:8384/',
-      svg: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="4" r="2.2"/><circle cx="5" cy="17" r="2.2"/><circle cx="19" cy="17" r="2.2"/><path d="M12 6.2v2.6M6.6 15.1l2.3-1.3M17.4 15.1l-2.3-1.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+      name: 'spotify',
+      url: 'https://open.spotify.com',
+      svg: '<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>'
     },
     {
-      key: 'y',
-      name: 'youtube',
-      url: 'https://youtube.com',
-      svg: '<svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>'
+      key: 'd',
+      name: 'duckduckgo',
+      url: 'https://duckduckgo.com',
+      svg: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c0 .83-.67 1.5-1.5 1.5S10 17.33 10 16.5V11h3v5.5zm-.5-7.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>'
     },
     {
-      key: 'r',
-      name: 'reddit',
-      url: 'https://reddit.com',
-      svg: '<svg viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.197-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
+      key: 'x',
+      name: 'x',
+      url: 'https://x.com',
+      svg: '<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>'
     },
     {
-      key: 'n',
-      name: 'Anime',
-      url: 'https://everythingmoe.com/',
-      svg: '<svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zm-11-2l6-4-6-4v8z"/></svg>'
-    },
-    {
-      key: 'w',
-      name: 'wallhaven',
-      url: 'https://wallhaven.cc',
-      svg: '<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71zM8.5 11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>'
+      key: 'v',
+      name: 'vimeo',
+      url: 'https://vimeo.com',
+      svg: '<svg viewBox="0 0 24 24"><path d="M22.396 7.164c-.093 2.026-1.507 4.799-4.245 8.32C15.323 19.161 12.935 21 10.98 21c-1.214 0-2.24-1.12-3.08-3.36-.56-2.052-1.12-4.105-1.68-6.158-.622-2.24-1.29-3.36-2.004-3.36-.156 0-.7.328-1.634.98l-.98-1.26c1.026-.902 2.04-1.797 3.042-2.684 1.37-1.182 2.4-1.804 3.09-1.867 1.616-.156 2.612.948 2.986 3.313.404 2.553.684 4.148.84 4.786.467 2.149.98 3.224 1.54 3.224.436 0 1.09-.685 1.96-2.053.87-1.37 1.34-2.413 1.4-3.13.125-1.183-.343-1.774-1.4-1.774-.5 0-1.012.115-1.54.343 1.028-3.363 3.003-4.99 5.924-4.88 2.164.08 3.193 1.47 3.086 4.167z"/></svg>'
     }
   ];
+
+  function loadLinks() {
+    try {
+      const stored = localStorage.getItem(LINKS_STORAGE_KEY);
+      if (stored) {
+        let parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          parsed = parsed.filter(l => !l.url.includes('viyoga.pages.dev') && l.name !== 'viyoga');
+          if (parsed.length > 0) return parsed;
+        }
+      }
+    } catch (_) {}
+    return [...DEFAULT_LINKS];
+  }
+
+  let currentLinks = loadLinks();
+
+  function saveLinks(links) {
+    currentLinks = links;
+    localStorage.setItem(LINKS_STORAGE_KEY, JSON.stringify(links));
+    renderLinks();
+  }
+
+  function getIconForLink(link) {
+    if (link.svg) return link.svg;
+    try {
+      const u = new URL(link.url);
+      const domain = u.hostname;
+      return `<img class="link-favicon" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=32" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><svg class="link-fallback-icon" style="display:none" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s2.24-5-5-5z" fill="currentColor"/></svg>`;
+    } catch (_) {
+      return `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/></svg>`;
+    }
+  }
 
   const linksGrid = document.getElementById('linksGrid');
 
   function renderLinks() {
-    linksGrid.innerHTML = LINKS.map(link => `
-      <a href="${link.url}" class="link-item" data-key="${link.key}">
-        <span class="link-icon">${link.svg}</span>
-        <span class="link-name">${link.name}</span>
+    if (!linksGrid) return;
+    const itemsHtml = currentLinks.map(link => `
+      <a href="${link.url}" class="link-item" data-key="${link.key}" title="${escapeHtml(link.name)} [${link.key}]">
+        <span class="link-icon">${getIconForLink(link)}</span>
+        <span class="link-name">${escapeHtml(link.name)}</span>
         <span class="link-key-tag">[${link.key}]</span>
+        <button class="link-del-btn" data-key="${link.key}" type="button" title="Delete shortcut [${link.key}]" aria-label="Delete">×</button>
       </a>
     `).join('');
+
+    const addCardHtml = `
+      <button class="link-item link-add-card" id="addLinkCardBtn" type="button" title="Add custom shortcut">
+        <span class="link-icon"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/></svg></span>
+        <span class="link-name">add site...</span>
+        <span class="link-key-tag">[+]</span>
+      </button>
+    `;
+
+    linksGrid.innerHTML = itemsHtml + addCardHtml;
+
+    // Attach delete listeners
+    linksGrid.querySelectorAll('.link-del-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const delKey = btn.dataset.key;
+        if (delKey) {
+          saveLinks(currentLinks.filter(l => l.key !== delKey));
+        }
+      });
+    });
+
+    const addCard = document.getElementById('addLinkCardBtn');
+    if (addCard) {
+      addCard.addEventListener('click', openAddLinkModal);
+    }
+  }
+
+  // Modal elements
+  const linkModal = document.getElementById('linkModal');
+  const linkForm = document.getElementById('linkForm');
+  const linkNameInput = document.getElementById('linkNameInput');
+  const linkUrlInput = document.getElementById('linkUrlInput');
+  const linkKeyInput = document.getElementById('linkKeyInput');
+  const closeLinkModalBtn = document.getElementById('closeLinkModal');
+  const cancelLinkBtn = document.getElementById('cancelLinkBtn');
+  const addLinkHeaderBtn = document.getElementById('addLinkHeaderBtn');
+  const resetLinksHeaderBtn = document.getElementById('resetLinksHeaderBtn');
+
+  function openAddLinkModal() {
+    if (!linkModal) return;
+    linkModal.classList.add('active');
+    linkModal.setAttribute('aria-hidden', 'false');
+    linkForm.reset();
+    setTimeout(() => linkNameInput && linkNameInput.focus(), 50);
+  }
+
+  function closeAddLinkModal() {
+    if (!linkModal) return;
+    linkModal.classList.remove('active');
+    linkModal.setAttribute('aria-hidden', 'true');
+  }
+
+  if (addLinkHeaderBtn) addLinkHeaderBtn.addEventListener('click', openAddLinkModal);
+  if (resetLinksHeaderBtn) {
+    resetLinksHeaderBtn.addEventListener('click', () => {
+      if (confirm('Reset all shortcuts to defaults?')) {
+        localStorage.removeItem(LINKS_STORAGE_KEY);
+        saveLinks([...DEFAULT_LINKS]);
+      }
+    });
+  }
+  if (closeLinkModalBtn) closeLinkModalBtn.addEventListener('click', closeAddLinkModal);
+  if (cancelLinkBtn) cancelLinkBtn.addEventListener('click', closeAddLinkModal);
+
+  if (linkModal) {
+    linkModal.addEventListener('click', (e) => {
+      if (e.target === linkModal) closeAddLinkModal();
+    });
+  }
+
+  // Auto-suggest hotkey when typing site name
+  if (linkNameInput) {
+    linkNameInput.addEventListener('input', () => {
+      const val = linkNameInput.value.trim().toLowerCase();
+      if (!val || (linkKeyInput && linkKeyInput.value && linkKeyInput.dataset.manual === 'true')) return;
+      const usedKeys = new Set(currentLinks.map(l => l.key.toLowerCase()));
+      usedKeys.add('t');
+      usedKeys.add(' ');
+      usedKeys.add('/');
+      for (const ch of val) {
+        if (/^[a-z0-9]$/.test(ch) && !usedKeys.has(ch)) {
+          linkKeyInput.value = ch;
+          break;
+        }
+      }
+    });
+  }
+
+  if (linkKeyInput) {
+    linkKeyInput.addEventListener('input', () => {
+      linkKeyInput.dataset.manual = 'true';
+    });
+  }
+
+  if (linkForm) {
+    linkForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = linkNameInput.value.trim();
+      let url = linkUrlInput.value.trim();
+      let key = linkKeyInput.value.trim().toLowerCase();
+
+      if (!name || !url || !key) return;
+
+      if (!/^https?:\/\//i.test(url)) {
+        url = 'https://' + url;
+      }
+
+      // Check if key already in use
+      const existingIdx = currentLinks.findIndex(l => l.key === key);
+      const newEntry = { key, name, url };
+
+      if (existingIdx !== -1) {
+        const updated = [...currentLinks];
+        updated[existingIdx] = newEntry;
+        saveLinks(updated);
+      } else {
+        saveLinks([...currentLinks, newEntry]);
+      }
+
+      closeAddLinkModal();
+    });
   }
 
   renderLinks();
@@ -1038,6 +1204,36 @@
       }
     }
 
+    // Custom link shortcuts commands: !add <name> <url> [key], !del <key>, !reset-links
+    if (lower.startsWith('!add ') || lower.startsWith('!link ')) {
+      const parts = q.split(/\s+/).slice(1);
+      if (parts.length >= 2) {
+        const name = parts[0];
+        let url = parts[1];
+        if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+        let key = (parts[2] || name[0]).toLowerCase();
+        saveLinks([...currentLinks.filter(l => l.key !== key), { key, name, url }]);
+        closeSearch();
+        return;
+      }
+    }
+
+    if (lower.startsWith('!del ') || lower.startsWith('!rm ')) {
+      const delKey = q.split(/\s+/)[1]?.toLowerCase();
+      if (delKey) {
+        saveLinks(currentLinks.filter(l => l.key !== delKey));
+        closeSearch();
+        return;
+      }
+    }
+
+    if (lower === '!reset-links') {
+      localStorage.removeItem(LINKS_STORAGE_KEY);
+      saveLinks([...DEFAULT_LINKS]);
+      closeSearch();
+      return;
+    }
+
     // Check for bang match
     for (const [bang, target] of Object.entries(BANGS)) {
       if (lower === bang) {
@@ -1172,9 +1368,9 @@
   if (linksGrid) {
     linksGrid.addEventListener('click', (e) => {
       const a = e.target.closest('.link-item');
-      if (a) {
+      if (a && !e.target.closest('.link-del-btn') && !a.classList.contains('link-add-card')) {
         const key = a.dataset.key;
-        const item = LINKS.find(l => l.key === key);
+        const item = currentLinks.find(l => l.key === key);
         if (item) {
           saveHistoryItem({ query: item.name, url: item.url, title: item.name, type: 'url' });
         }
@@ -1188,6 +1384,17 @@
   document.addEventListener('keydown', (e) => {
     // If typing in any input or textarea, or navigating tasks, don't trigger global hotkeys
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable || e.target.closest('.tasks-list')) {
+      if (e.key === 'Escape' && linkModal && linkModal.classList.contains('active')) {
+        closeAddLinkModal();
+      }
+      return;
+    }
+
+    // If link modal is open, Escape closes it
+    if (linkModal && linkModal.classList.contains('active')) {
+      if (e.key === 'Escape') {
+        closeAddLinkModal();
+      }
       return;
     }
 
@@ -1230,8 +1437,8 @@
 
     const key = e.key.toLowerCase();
 
-    // Hotkey match for direct link opening (v or legacy h for viyoga)
-    const matchedLink = LINKS.find(l => l.key === key || (key === 'h' && l.name === 'viyoga'));
+    // Hotkey match for direct link opening
+    const matchedLink = currentLinks.find(l => l.key === key);
     if (matchedLink) {
       e.preventDefault();
       saveHistoryItem({ query: matchedLink.name, url: matchedLink.url, title: matchedLink.name, type: 'url' });
